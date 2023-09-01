@@ -11,7 +11,9 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
-reps = 0  # not a constant, consider refactor
+# not a constant, consider refactor
+reps = 0
+check_marks_list = []
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
@@ -31,7 +33,7 @@ def start_timer():  # Alternative to lambda
         count_down(long_b_timer)
         print(f"Long break: {reps}")
         title.config(text="Break", fg=RED)
-    elif reps % 4 == 0:
+    elif reps % 2 == 0:
         print(f"Short break: {reps}")
         count_down(short_b_timer)
         title.config(text="Break", fg=PINK)
@@ -45,7 +47,7 @@ def start_timer():  # Alternative to lambda
 def count_down(count):
     min_remaining = floor(count / 60)
     sec_remaining = count % 60
-
+    global check_marks_list
     if sec_remaining < 10:
         sec_block = f"0{sec_remaining}"
     else:
@@ -57,10 +59,12 @@ def count_down(count):
     canvas.itemconfig(canvas_timer, text=timer)
 
     if count > -1:
-        # print(count)  # For testing
         app.after(1000, count_down, count - 1)
     else:
         start_timer()
+        if reps % 2 == 0:
+            check_marks_list.append("✔")
+            check_marks.config(text=check_marks_list)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -87,7 +91,7 @@ canvas.grid(column=1, row=1)
 title = Label(text="Timer", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 40, "bold"))
 title.grid(column=1, row=0)
 
-check_marks = Label(text="✔", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 12))
+check_marks = Label(bg=YELLOW, fg=GREEN, font=(FONT_NAME, 12))
 check_marks.grid(column=1, row=3)
 
 # Buttons
