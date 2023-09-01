@@ -14,6 +14,7 @@ LONG_BREAK_MIN = 20
 reps = 0  # not a constant, consider refactor
 
 # ---------------------------- TIMER RESET ------------------------------- #
+# TODO Implement RESET LOGIC for reset button.
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
