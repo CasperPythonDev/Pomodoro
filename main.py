@@ -14,13 +14,30 @@ LONG_BREAK_MIN = 20
 # not a constant, consider refactor
 reps = 0
 check_marks_list = []
+timer_after = None
+
 
 # ---------------------------- TIMER RESET ------------------------------- #
-# TODO Implement RESET LOGIC for reset button.
+def reset_timer():
+    print("reset complete")
+    if timer_after is not None:
+        app.after_cancel(timer_after)
+    else:
+        print("Timer not initialized")
+    title.config(text="Timer", fg=GREEN)
+    check_marks_list = []
+    check_marks.config(text=check_marks_list)
+    timer = "0:00"
+    canvas.itemconfig(canvas_timer, text=timer)
+    global reps
+    reps = 0
+    start_button.config(state="normal")
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():  # Alternative to lambda
+    start_button.config(state="disabled")
+
     global reps
     reps += 1
     # work_timer = WORK_MIN * 60
@@ -60,10 +77,12 @@ def count_down(count):
     canvas.itemconfig(canvas_timer, text=timer)
 
     if count > -1:
-        app.after(1000, count_down, count - 1)
+        global timer_after
+        timer_after = app.after(1000, count_down, count - 1)
     else:
         start_timer()
         if reps % 2 == 0:
+            # add logic that adds line swap at 4 completions
             check_marks_list.append("✔")
             check_marks.config(text=check_marks_list)
 
@@ -100,7 +119,7 @@ start_button = Button(text="Start", highlightthickness=0, command=start_timer)
 # lambda function allows us to pass argument with function in TKinter framework. # command=lambda: count_down(5)
 start_button.grid(column=0, row=2)
 
-reset_button = Button(text="Reset", highlightthickness=0)
+reset_button = Button(text="Reset", highlightthickness=0, command=reset_timer)
 reset_button.grid(column=2, row=2)
 # - function calls
 
