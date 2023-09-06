@@ -19,11 +19,11 @@ timer_after = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
-    print("reset complete")
+    # print("reset complete")
     if timer_after is not None:
         app.after_cancel(timer_after)
-    else:
-        print("Timer not initialized")
+    # else:
+    # print("Timer not initialized")
     title.config(text="Timer", fg=GREEN)
     check_marks_list = []
     check_marks.config(text=check_marks_list)
@@ -40,24 +40,24 @@ def start_timer():  # Alternative to lambda
 
     global reps
     reps += 1
-    # work_timer = WORK_MIN * 60
-    # short_b_timer = SHORT_BREAK_MIN * 60
-    # long_b_timer = LONG_BREAK_MIN * 60
-    work_timer = 5  # Test
-    short_b_timer = 2  # Test
-    long_b_timer = 10  # Test
+    work_timer = WORK_MIN * 60
+    short_b_timer = SHORT_BREAK_MIN * 60
+    long_b_timer = LONG_BREAK_MIN * 60
+    # work_timer = 5  # Test
+    # short_b_timer = 2  # Test
+    # long_b_timer = 10  # Test
 
     if reps % 8 == 0:
         count_down(long_b_timer)
-        print(f"Long break: {reps}")
+        # print(f"Long break: {reps}") # Test purposes
         title.config(text="Break", fg=RED)
     elif reps % 2 == 0:
-        print(f"Short break: {reps}")
+        # print(f"Short break: {reps}") # Test purposes
         count_down(short_b_timer)
         title.config(text="Break", fg=PINK)
     else:
         count_down(work_timer)
-        print(f"Work flow: {reps}")
+        # print(f"Work flow: {reps}") # Test purposes
         title.config(text="Work", fg=GREEN)
 
 
